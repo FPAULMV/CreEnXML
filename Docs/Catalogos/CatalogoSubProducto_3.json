@@ -1,0 +1,34 @@
+[
+    {
+        "Id": 16,
+        "Nombre": "Diésel Automotriz [contenido mayor de azufre a 15 mg/kg y contenido máximo de azufre de 500 mg/kg]",
+        "ProductoId": 3,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 17,
+        "Nombre": "Diésel Industrial",
+        "ProductoId": 3,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 30,
+        "Nombre": "Diésel Agrícola/Marino",
+        "ProductoId": 3,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 62,
+        "Nombre": "Diésel de Ultra Bajo Azufre (DUBA) [contenido máximo de azufre de 15 mg/kg]",
+        "ProductoId": 3,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    }
+]

@@ -1,0 +1,857 @@
+﻿<xs:schema
+  elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  >
+  <xs:element name="ReporteVolumenes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="Permiso">
+          <xs:annotation>
+            <xs:documentation  xml:lang="es-mx">
+              Elemento que permite indicar el permiso y periodo de reporte
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element  minOccurs="0" maxOccurs="unbounded" name="Fecha">
+                <xs:annotation>
+                  <xs:documentation  xml:lang="es-mx">
+                    Elemento que permite indicar los días para los que se reportará algún tipo de actividad
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Producto">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" maxOccurs="unbounded" name="Inventario">
+                            <xs:annotation>
+                              <xs:documentation  xml:lang="es-mx">
+                                Elemento que permite informar que se tuvieron inventarios  del producto-subproducto indicado en elemento padre, para el día seleccionado en el elemento Fecha
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute type="t_permiso_ALM" name="PermisoAlmacenista"  use="required" >
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo requerido para expresar el número de permiso CRE del Almacenista.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="t_inventario" name="InventarioInicial" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo condicional para expresar el inventario inicial del producto en barriles a las 00:00 hrs
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="t_inventario" name="InventarioFinal" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo condicional para expresar el inventario final del producto en barriles a las 23:59 hrs.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element minOccurs="0" maxOccurs="unbounded" name="VentasNacional">
+                            <xs:annotation>
+                              <xs:documentation  xml:lang="es-mx">
+                                Elemento que permite informar que se realizaron ventas nacionales  del producto-subproducto indicado en elemento padre, para el día seleccionado en el elemento Fecha
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element minOccurs="0" maxOccurs="unbounded" name="UsuarioFinal">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar las ventas nacionales a usuarios finales
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element minOccurs="0" maxOccurs="1" name="FleteVNUsuarioFinal">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se cobró flete para ventas nacionales a usuarios finales
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el costo del flete
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required" >
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el número de permiso CRE del transportista
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="t_precio" name="PrecioVenta" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el precio de venta en $/barril
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_volumen" name="VolumenVendido" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el volumen vendido en barriles
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="xs:int" name="SectorEconomico" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Identificador único del tipo sector económico Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/sectoreseconomicos Donde: ------ SectorId: Identificador único (entero) ------ NmbreSector: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                          Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_RFC" name="RFCCliente" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo condicional para expresar el RFC del Cliente
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_razonSocial" name="RazonSocialCliente" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo condicional para expresar la razon social del cliente, sin incluir caracteres especiales salvo Ñ y &amp;
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="xs:int" name="Entidad" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Identificador único del tipo de Entidad Federativa de destino REST del catálogo: https://api-catalogo.cre.gob.mx/API/utiles/entidadesfederativas ----- Donde: IdEntidadFederativa: Identificador único (entero) ----- Nombre: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                          Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="xs:int" name="Municipio" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Identificador único del tipo del Municipio de destino REST del catálogo: https://api-catalogo.cre.gob.mx/API/utiles/municipios ----- Donde: EntidadFederativaId: Identificador único (entero) ---- EntidadFederativa: Nombre (cadena)----- MunicipioId: Identificador único (entero) ----- Municipio: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                          Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="PermisionarioCRECliente"  minOccurs="0" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar las ventas nacionales a permisionarios CRE
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="FleteVNPermisionarioCRE" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se cobró flete para ventas nacionales a permisionarios CRE
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el costo del flete
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required" >
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el número de permiso CRE del transportista
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="t_permisoCRECliente" name="NumeroPermisoCRECliente" use="required" >
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo condicional para expresar el numero permiso CRE. Este campo es obligatorio si el tipo de cliente es Permisionario CRE.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_precio" name="PrecioVenta" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el precio de venta en $/barril
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_volumen" name="VolumenVendido" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el volumen vendido en barriles
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <!--A confirmar-->
+                                    <xs:attribute type="xs:int" name="Entidad" use="optional">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Identificador único del tipo de Entidad Federativa de destino REST del catálogo: https://api-catalogo.cre.gob.mx/API/utiles/entidadesfederativas ----- Donde: IdEntidadFederativa: Identificador único (entero) ----- Nombre: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                          Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="xs:int" name="Municipio" use="optional">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Identificador único del tipo del Municipio de destino REST del catálogo: https://api-catalogo.cre.gob.mx/API/utiles/municipios ----- Donde: EntidadFederativaId: Identificador único (entero) ---- EntidadFederativa: Nombre (cadena)----- MunicipioId: Identificador único (entero) ----- Municipio: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                          Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <!--A confirmar-->
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Exportacion" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation  xml:lang="es-mx">
+                                Elemento que permite informar que se realizaron ventas del tipo exportación  del producto-subproducto indicado en elemento padre, para el día seleccionado en el elemento Fecha
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="FleteVentaExportacion" minOccurs="0" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar los casos en que se cobró flete para ventas del tipo exportación
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el costo del flete
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                        <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el número de permiso CRE del transportista
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute type="t_precio" name="PrecioVenta" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo requerido para expresar el precio de venta en $/barril
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="t_volumen" name="VolumenVendido" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo requerido para expresar el volumen vendido en barriles
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="SectorEconomico" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo sector económico Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/sectoreseconomicos Donde: ------ SectorId: Identificador único (entero) ------ NmbreSector: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                    Este campo es obligatorio si el tipo de cliente es Usuario final.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="t_razonSocial" name="RazonSocialCliente" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo condicional para expresar la razon social del cliente
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="PuntoExportacion" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de punto de Exportación Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/puntosimportacionexportacion Donde: ----- puntoImportacionExportacionId: Identificador único (entero) ------ Denominación: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="PrimerPaisDestino" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de primer País de destino  REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/paises Donde: Id: Identificador único (entero)------ Nombre: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="MedioEntradaAduana" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de Medio de entrada a la aduana REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/mediostransporte Donde: ----- Id: Identificador único (entero) ------ MedioDeTransporteEspecifico: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="MedioSalidaAduana" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de Medio de salida de la aduana REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/mediostransporte Donde: ----- Id: Identificador único (entero) ------ MedioDeTransporteEspecifico: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ComprasNacional" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation  xml:lang="es-mx">
+                                Elemento que permite informar que se realizaron compras nacionales  del producto-subproducto indicado en elemento padre, para el día seleccionado en el elemento Fecha
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Refineria" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar las compras nacionales a refinerías con permiso SENER
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="FleteCompraNacionalRefineria" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se pagó flete para compras nacionales a refinerías con permiso SENER
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el costo del flete
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el número de permiso CRE del transportista
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="DescuentoCompraNacionalRefineria" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se aplicó algún descuento para compras nacionales a refinerías con permiso SENER
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_precio" name="PrecioDescuentoIncluido" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el descuento aplicado en $/barril
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_OtroTipoDescuento" name="OtroTipoDescuento" use="optional">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para especificar en caso de que el descuento sea otro
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="xs:int" name="TipoDescuentoId" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el tipo de descuento (1 – Volumen, 2 – Método de pago, 3 - Otro)
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="t_precio" name="PrecioCompra" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el precio de compra en $/barril
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_volumen" name="VolumenComprado" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el volumen comprado en barriles
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_PermisoSENER" name="PermisoSENER" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo condicional para expresar el número de permiso SENER. Este campo es obligatorio si el tipo Proveedor es Refinería.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="PermisionarioCREProveedor" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar las ventas nacionales a permisionarios CRE
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="FleteCompraNacionalPermisionarioCRE" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se pagó flete para compras nacionales a permisionarios CRE
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el costo del flete
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required" >
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el número de permiso CRE del transportista
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="DescuentoCompraNacionalPermisionarioCRE" minOccurs="0" maxOccurs="1">
+                                        <xs:annotation>
+                                          <xs:documentation  xml:lang="es-mx">
+                                            Elemento que permite identificar los casos en que se aplicó algún descuento para compras nacionales a Permisionarios CRE
+                                          </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                          <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                              <xs:attribute type="t_precio" name="PrecioDescuentoIncluido" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el descuento aplicado en $/barril
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="t_OtroTipoDescuento" name="OtroTipoDescuento" use="optional">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para especificar en caso de que el descuento sea otro
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                              <xs:attribute type="xs:int" name="TipoDescuentoId" use="required">
+                                                <xs:annotation>
+                                                  <xs:documentation  xml:lang="es-mx">
+                                                    Atributo requerido para expresar el tipo de descuento (1 – Volumen, 2 – Método de pago, 3 - Otro)
+                                                  </xs:documentation>
+                                                </xs:annotation>
+                                              </xs:attribute>
+                                            </xs:extension>
+                                          </xs:simpleContent>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="t_precio" name="PrecioCompra" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el precio de compra en $/barril
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_volumen" name="VolumenComprado" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo requerido para expresar el volumen comprado en barriles
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_permiso_COM" name="NumeroPermisoCREProveedor" use="required" >
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo condicional para expresar el numero permiso CRE. Este campo es obligatorio si el tipo de proveedor es Permisionario CRE.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute type="t_permiso_DIS" name="NumeroPermisoCREDistribuidor" use="optional" >
+                                      <xs:annotation>
+                                        <xs:documentation  xml:lang="es-mx">
+                                          Atributo ### condicional para expresar el numero permiso CRE. Este campo es obligatorio si el tipo de proveedor es Permisionario CRE.
+                                        </xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Importacion" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation  xml:lang="es-mx">
+                                Elemento que permite informar que se realizaron compras del tipo importación  del producto-subproducto indicado en elemento padre, para el día seleccionado en el elemento Fecha
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="FleteCompraImportacion" minOccurs="0" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar los casos en que se pagó flete para compras del tipo importación
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="t_flete" name="CostoFlete" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el costo del flete
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                        <xs:attribute type="t_permiso_TRA" name="PermisoTransportista" use="required" >
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el número de permiso CRE del transportista
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="DescuentoCompraImportacion" minOccurs="0" maxOccurs="1">
+                                  <xs:annotation>
+                                    <xs:documentation  xml:lang="es-mx">
+                                      Elemento que permite identificar los casos en que se aplicó algún descuento para compras del tipo importación
+                                    </xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="t_precio" name="PrecioDescuentoIncluido" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el descuento aplicado en $/barril
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                        <xs:attribute type="t_OtroTipoDescuento" name="OtroTipoDescuento" use="optional">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para especificar en caso de que el descuento sea otro
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                        <xs:attribute type="xs:int" name="TipoDescuentoId" use="required">
+                                          <xs:annotation>
+                                            <xs:documentation  xml:lang="es-mx">
+                                              Atributo requerido para expresar el tipo de descuento (1 – Volumen, 2 – Método de pago, 3 - Otro)
+                                            </xs:documentation>
+                                          </xs:annotation>
+                                        </xs:attribute>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute type="t_precio" name="PrecioCompra" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo requerido para expresar el precio de compra en $/barril
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="t_volumen" name="VolumenComprado" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo requerido para expresar el volumen comprado en barriles
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:string" name="RazonSocialProveedor" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Atributo condicional para expresar la razon social del proveedor
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="PuntoInternacion" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de punto de Internación Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/puntosimportacionexportacion Donde: ----- puntoImportacionExportacionId: Identificador único (entero) ------ Denominación: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="PaisOrigen" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de País de origen REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/paises Donde: Id: Identificador único (entero)------ Nombre: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="MedioEntradaAduana" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de Medio de entrada a la aduana REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/mediostransporte Donde: ----- Id: Identificador único (entero) ------ MedioDeTransporteEspecifico: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute type="xs:int" name="MedioSalidaAduana" use="required">
+                                <xs:annotation>
+                                  <xs:documentation  xml:lang="es-mx">
+                                    Identificador único del tipo de Medio de salida de la aduana REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/mediostransporte Donde: ----- Id: Identificador único (entero) ------ MedioDeTransporteEspecifico: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="t_productoId" name="ProductoId" use="required">
+                          <xs:annotation>
+                            <xs:documentation  xml:lang="es-mx">
+                              Identificador único del tipo de producto Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/ObtenerCatalogoProducto Donde: ----- ProductoId: Identificador único (entero) ------ Producto: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute type="t_SubproductoId" name="SubProductoId" use="required">
+                          <xs:annotation>
+                            <xs:documentation  xml:lang="es-mx">
+                              Identificador único del tipo de subproducto del producto Servicio REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/ObtenerCatalogoSubProducto?ProductoId=[ProductoId] Donde: ----- IdProducto: Identificador único (entero)----- Producto: Nombre (cadena)----- IdSubProducto: Identificador único (entero) ------ SubProducto: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:date" name="Diaareportar" use="required">
+                    <xs:annotation>
+                      <xs:documentation  xml:lang="es-mx">
+                        Atributo requerido para expresar el día del periodo a reportar
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="t_Permiso" name="Numero" use="required">
+              <xs:annotation>
+                <xs:documentation  xml:lang="es-mx">
+                  Atributo requerido para expresar el número de permiso otorgado por la Comisión Reguladora de Energía (CRE) que presenta el reporte
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:date" name="FechaInicio" use="required">
+              <xs:annotation>
+                <xs:documentation  xml:lang="es-mx">
+                  Atributo requerido para expresar la fecha de inicio del reporte
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:date" name="FechaFin" use="required">
+              <xs:annotation>
+                <xs:documentation  xml:lang="es-mx">
+                  Atributo requerido para expresar la fecha final del reporte
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:int" name="TipoReporte" use="required">
+              <xs:annotation>
+                <xs:documentation  xml:lang="es-mx">
+                  Identificador único del tipo de reporte REST del catálogo: https://api-catalogo.cre.gob.mx/api/utiles/ObtenerTiposReporte Donde: ----- tipoReporteId: Identificador único (entero) ------ Nombre: Nombre (cadena) NOTA: ------ Recomendamos consumir este servicio en línea. Si almacena este catálogo dentro de alguna solución, sugerimos se actualice constantemente.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="t_Permiso">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="15"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[H]{1}/[0-9]{4,6}/[COM]{3}/[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_permiso_TRA">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[PL]{2}[/]{1}[0-9]{1,6}[/]{1}[TRA|DIS]{3}[/]{1}[OM|DUC|TM]{2,3}[/]{1}[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_permiso_ALM">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[PL]{2}[/]{1}[0-9]{1,6}[/]{1}[ALM]{3}[/]{1}([AE]{2}[/]{1})?[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_permisoCRECliente">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="14"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[PL|H]{1,2}[/]{1}[0-9]{1,6}[/]{1}[EXP|DIS|COM]{3}[/]{1}([ES|ESA|AE|OM]{2,3}[/]{1})?([MM]{2}[/]{1})?[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_permiso_COM">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="15"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <!-- Patron original del valor de abajo -> "[H]{1}/[0-9]{4,6}/[COM]{3}/[0-9]{4}" -->
+      <xs:pattern value="(H/[0-9]{4,6}/COM/[0-9]{4})|(PL/[0-9]{1,6}/(TRA|DIS)/(OM|DUC|TM)/[0-9]{4})"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_permiso_DIS">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="15"/>
+      <xs:maxLength value="24"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[PL]{2}[/]{1}[0-9]{1,6}[/]{1}[TRA|DIS]{3}[/]{1}[OM|DUC|TM]{2,3}[/]{1}[0-9]{4}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_fecha">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\d\d"/>
+      <xs:minLength value="10"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_productoId">
+    <xs:restriction base="xs:int">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_SubproductoId">
+    <xs:restriction base="xs:int">
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_precio">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0.01"/>
+      <xs:maxInclusive value="99999.99"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_flete">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0.01"/>
+      <xs:maxInclusive value="999999999.99"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_volumen">
+    <xs:annotation>
+      <xs:documentation>Atributo requerido para expresar volumenes</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0.01"/>
+      <xs:maxInclusive value="99999999999.99"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_OtroTipoDescuento">
+    <xs:annotation>
+      <xs:documentation>
+        Atributo requerido para especificar en caso de que el descuento sea otro
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[A-Z0-9]{3,200}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_razonSocial">
+    <xs:annotation>
+      <xs:documentation>Tipo definido para la razón social asociada</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="3"/>
+      <xs:maxLength value="200"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[A-Z0-9Ñ&amp;\s]{3,200}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_RFC">
+    <xs:annotation>
+      <xs:documentation>
+        Tipo definido para expresar clave del Registro Federal de Contribuyente
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="12"/>
+      <xs:maxLength value="13"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:pattern value="[A-ZÑ&amp;]{3,4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z0-9]?[A-Z0-9]?[0-9A-Z]?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_inventario">
+    <xs:annotation>
+      <xs:documentation>Tipo definido para expresar inventarios</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2"/>
+      <xs:totalDigits value="13"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="t_PermisoSENER">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="18"/>
+      <xs:maxLength value="30"/>
+      <xs:whiteSpace value="collapse"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

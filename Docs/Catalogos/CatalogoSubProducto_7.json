@@ -1,0 +1,18 @@
+[
+    {
+        "Id": 13,
+        "Nombre": "Regular (con un índice de octano ([RON+MON]/2) mínimo de 87)",
+        "ProductoId": 7,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 14,
+        "Nombre": "Premium (con un índice de octano ([RON+MON]/2) mínimo de 91)",
+        "ProductoId": 7,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    }
+]

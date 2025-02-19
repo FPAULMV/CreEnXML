@@ -1,0 +1,33 @@
+->2024-11-12 00:19:50:
+El XML es válido según el esquema XSD.->2024-11-12 01:02:21:
+Error: El archivo seleccionado está abierto. Por favor, ciérralo e inténtalo de nuevo.->2024-11-12 01:02:35:
+El XML NO es válido según el esquema XSD.->2024-11-12 01:10:27:
+El XML NO es válido según el esquema XSD.->2024-11-12 01:11:29:
+El XML NO es válido según el esquema XSD.->2024-11-12 01:15:26:
+El XML es válido según el esquema XSD.->2024-11-12 01:15:48:
+El XML es válido según el esquema XSD.->2024-11-12 01:16:42:
+El XML es válido según el esquema XSD.->2024-11-14 11:44:03:
+No se seleccionó ningún archivo.->2024-11-14 13:04:32:
+No se seleccionó ningún archivo.->2024-11-14 13:04:37:
+No se seleccionó ningún archivo.->2024-11-15 12:34:08:
+El XML es válido según el esquema XSD.->2024-11-15 16:00:39:
+El XML es válido según el esquema XSD.->2024-11-15 16:38:40:
+El XML es válido según el esquema XSD.->2024-11-15 16:50:23:
+El XML es válido según el esquema XSD.->2024-11-15 16:59:09:
+El XML es válido según el esquema XSD.->2024-11-15 17:01:37:
+No se seleccionó ningún archivo.->2024-11-15 17:05:46:
+El XML es válido según el esquema XSD.->2024-11-21 23:17:31:
+El XML es válido según el esquema XSD.->2024-11-21 23:20:15:
+El XML es válido según el esquema XSD.->2024-11-21 23:21:16:
+El XML es válido según el esquema XSD.->2024-11-22 10:58:44:
+No se seleccionó ningún archivo.->2024-11-27 13:05:36:
+No se seleccionó ningún archivo.->2024-11-29 12:59:20:
+El XML es válido según el esquema XSD.->2024-12-12 15:46:19:
+El XML es válido según el esquema XSD.->2024-12-12 15:55:10:
+El XML es válido según el esquema XSD.->2024-12-12 15:56:16:
+El XML es válido según el esquema XSD.->2024-12-12 16:00:33:
+El XML es válido según el esquema XSD.->2024-12-12 16:02:03:
+El XML es válido según el esquema XSD.->2024-12-12 16:03:17:
+El XML es válido según el esquema XSD.->2024-12-12 16:04:29:
+El XML es válido según el esquema XSD.->2024-12-12 16:05:37:
+El XML es válido según el esquema XSD.

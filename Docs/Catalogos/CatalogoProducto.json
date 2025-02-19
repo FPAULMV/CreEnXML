@@ -1,0 +1,127 @@
+[
+    {
+        "Id": 3,
+        "Nombre": "Diésel",
+        "Acronimo": null
+    },
+    {
+        "Id": 5,
+        "Nombre": "Gas Natural Vehicular",
+        "Acronimo": null
+    },
+    {
+        "Id": 6,
+        "Nombre": "Gas LP",
+        "Acronimo": null
+    },
+    {
+        "Id": 7,
+        "Nombre": "Gasolinas",
+        "Acronimo": null
+    },
+    {
+        "Id": 8,
+        "Nombre": "Combustóleo",
+        "Acronimo": null
+    },
+    {
+        "Id": 9,
+        "Nombre": "Turbosina",
+        "Acronimo": null
+    },
+    {
+        "Id": 11,
+        "Nombre": "Petróleo",
+        "Acronimo": null
+    },
+    {
+        "Id": 12,
+        "Nombre": "Gas Natural",
+        "Acronimo": null
+    },
+    {
+        "Id": 13,
+        "Nombre": "Energía Eléctrica",
+        "Acronimo": null
+    },
+    {
+        "Id": 14,
+        "Nombre": "Líquidos del Gas Natural",
+        "Acronimo": null
+    },
+    {
+        "Id": 15,
+        "Nombre": "Condensados",
+        "Acronimo": null
+    },
+    {
+        "Id": 16,
+        "Nombre": "Bioenergético",
+        "Acronimo": null
+    },
+    {
+        "Id": 17,
+        "Nombre": "Hidratos de metano",
+        "Acronimo": null
+    },
+    {
+        "Id": 18,
+        "Nombre": "Butanos",
+        "Acronimo": null
+    },
+    {
+        "Id": 19,
+        "Nombre": "Etano",
+        "Acronimo": null
+    },
+    {
+        "Id": 20,
+        "Nombre": "Metano",
+        "Acronimo": null
+    },
+    {
+        "Id": 21,
+        "Nombre": "Propano",
+        "Acronimo": null
+    },
+    {
+        "Id": 22,
+        "Nombre": "Gasavión",
+        "Acronimo": null
+    },
+    {
+        "Id": 23,
+        "Nombre": "Gasóleo Doméstico",
+        "Acronimo": null
+    },
+    {
+        "Id": 24,
+        "Nombre": "Combustóleo Intermedio",
+        "Acronimo": null
+    },
+    {
+        "Id": 25,
+        "Nombre": "Naftas",
+        "Acronimo": null
+    },
+    {
+        "Id": 30,
+        "Nombre": "Crudo",
+        "Acronimo": null
+    },
+    {
+        "Id": 31,
+        "Nombre": "Propano (como combustible)",
+        "Acronimo": null
+    },
+    {
+        "Id": 32,
+        "Nombre": "Gas Natural Comprimido",
+        "Acronimo": null
+    },
+    {
+        "Id": 33,
+        "Nombre": "Gas Natural Licuado",
+        "Acronimo": null
+    }
+]

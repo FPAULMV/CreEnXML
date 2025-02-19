@@ -1,0 +1,26 @@
+[
+    {
+        "Id": 9,
+        "Nombre": "Combustóleo menor o igual a 1% de azufre",
+        "ProductoId": 8,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 10,
+        "Nombre": "Combustóleo mayor a 1% y menor a 3% de azufre",
+        "ProductoId": 8,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    },
+    {
+        "Id": 12,
+        "Nombre": "Combustóleo mayor o igual a 3% y menor a 4.4% de azufre",
+        "ProductoId": 8,
+        "UnidadMedidaId": 0,
+        "UnidadMedida": null,
+        "Acronimo": null
+    }
+]
