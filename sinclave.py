@@ -3,19 +3,12 @@ from tkinter import scrolledtext, messagebox
 import threading   
 from tkinter import Menu
 from PIL import Image, ImageTk
-from pandastable import Table
 from decouple import config  # Para leer archivos de configuración (como .env)
 import pandas as pd
 from lxml import etree as ET
 import fns as f
 from io import BytesIO
 import os
-from Crypto.Cipher import AES
-import base64
-from datetime import datetime
-import requests
-import json
-import sys
 
 class Principal:
     """
@@ -223,13 +216,15 @@ class Principal:
         # Define la fecha que se esperaria pretende reportar, segun la fecha en la que se esta ejecutando el programa. 
         self.fechainicial, self.fechafinal = f.fechas_inicio_fin()
         fechas = f.fechas_inicio_fin(valor=1)
-        print(f"Las fechas son : fecha inicial:{self.fechainicial}\n Fecha final:{self.fechafinal}")
 
 
         # Obtener valores unicos de la fecha a reportar en Excel y los ordena de mas antiguo a mas reciente.
         df['Diaareportar'] = pd.to_datetime(df['Diaareportar'], errors='coerce')
         df_fechas = df['Diaareportar'] = df['Diaareportar'].dt.strftime('%Y-%m-%d')
-
+        print(df_fechas)
+        input()
+        self.fecha_i = df_fechas.min()
+        self.fecha_f = df_fechas.max()
 
 
         # Obtener conjunto unicos de ProductoId y SubProductoId y los ordena por 
@@ -263,7 +258,7 @@ class Principal:
 
         # Crear la estructura XML
         root = ET.Element("ReporteVolumenes")
-        permiso = ET.SubElement(root, 'Permiso', FechaFin=f"{self.fechafinal}", FechaInicio=f"{self.fechainicial}", Numero=F"{self.permisoCRE}", TipoReporte="1")
+        permiso = ET.SubElement(root, 'Permiso', FechaFin=f"{self.fecha_f}", FechaInicio=f"{self.fecha_i}", Numero=F"{self.permisoCRE}", TipoReporte="1")
         for fecha in fechasdelreporte:
             fecha_elemen = ET.SubElement(permiso, 'Fecha', Diaareportar=f"{fecha}")
             df_fil = df[df['Diaareportar'] == fecha]
@@ -307,18 +302,26 @@ class Principal:
                 df_compras = df_fil[(df_fil['ProductoId'] == str(p)) & (df_fil['SubProductoId'] == str(sp)) & (df_fil['TipoMov'] == 'compra')]
                 df_compras['VolumenComprado'] = df_compras['VolumenComprado'].apply(lambda x: f"{float(x):.2f}" if x != '' else '')
                 df_compras['CostoFlete'] = df_compras['CostoFlete'].apply(lambda x: f"{float(x):.2f}" if x != '' else '')
-                df_compras['TipoDescuentoId'] = df_compras['TipoDescuentoId'].astype(int)
+                df_compras['TipoDescuentoId'] = df_compras['TipoDescuentoId'].apply(lambda x: int(x) if pd.notna(x) else '')
                 df_compras['CostoFlete'] = df_compras['CostoFlete'].replace("nan","")
                 df_compras = df_compras.fillna("")
                 for _, compra_row in df_compras.iterrows():
                     if compra_row['CostoFlete'] == "":
                         permisionariocompra = ET.SubElement(comprasnacional, 'PermisionarioCREProveedor', NumeroPermisoCREProveedor=f"{compra_row['NumeroPermisoCREProveedor']}", PrecioCompra=f"{compra_row['PrecioCompra']}", VolumenComprado=f"{compra_row['VolumenComprado']}")
-                        descuento = ET.SubElement(permisionariocompra, 'DescuentoCompraNacionalPermisionarioCRE', PrecioDescuentoIncluido=f"{compra_row['PrecioDescuentoIncluido']}", TipoDescuentoId=f"{compra_row['TipoDescuentoId']}")
+                        if compra_row['PrecioDescuentoIncluido'] == "":
+                            pass
+                        else:
+                            descuento = ET.SubElement(permisionariocompra, 'DescuentoCompraNacionalPermisionarioCRE', PrecioDescuentoIncluido=f"{compra_row['PrecioDescuentoIncluido']}", TipoDescuentoId=f"{compra_row['TipoDescuentoId']}")
+
                         permisionariocompra.text = ''
                     else:
                         permisionariocompra = ET.SubElement(comprasnacional, 'PermisionarioCREProveedor', NumeroPermisoCREProveedor=f"{compra_row['NumeroPermisoCREProveedor']}", PrecioCompra=f"{compra_row['PrecioCompra']}", VolumenComprado=f"{compra_row['VolumenComprado']}")
                         flete = ET.SubElement(permisionariocompra, 'FleteCompraNacionalPermisionarioCRE', CostoFlete=f"{compra_row['CostoFlete']}", PermisoTransportista=f"{compra_row['PermisoTransportista']}")
-                        descuento = ET.SubElement(permisionariocompra, 'DescuentoCompraNacionalPermisionarioCRE', PrecioDescuentoIncluido=f"{compra_row['PrecioDescuentoIncluido']}", TipoDescuentoId=f"{compra_row['TipoDescuentoId']}")
+                        if compra_row['PrecioDescuentoIncluido'] == "":
+                            pass
+                        else:
+                            descuento = ET.SubElement(permisionariocompra, 'DescuentoCompraNacionalPermisionarioCRE', PrecioDescuentoIncluido=f"{compra_row['PrecioDescuentoIncluido']}", TipoDescuentoId=f"{compra_row['TipoDescuentoId']}")
+                        
                         permisionariocompra.text = ''
                 comprasnacional.text = ""
                 producto.text = ''
@@ -351,9 +354,8 @@ class Principal:
         
     def crearxml(self):
         global xml_str
-        print(f"El tipo es: {type(self.fechainicial)}\n El valor es: {self.fechainicial}")
-        fecha_1 = self.fechainicial.replace("-","")
-        fecha_2 = self.fechafinal.replace("-","")
+        fecha_1 = self.fecha_i.replace("-","")
+        fecha_2 = self.fecha_f.replace("-","")
         cre_1 = self.permisoCRE.replace("/","_")
         # Seleccionar carpeta de destino
         folder = f.seleccionar_carpeta()

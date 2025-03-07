@@ -30,4 +30,14 @@ El XML es válido según el esquema XSD.->2024-12-12 16:02:03:
 El XML es válido según el esquema XSD.->2024-12-12 16:03:17:
 El XML es válido según el esquema XSD.->2024-12-12 16:04:29:
 El XML es válido según el esquema XSD.->2024-12-12 16:05:37:
+El XML es válido según el esquema XSD.->2025-03-06 13:48:24:
+El XML NO es válido según el esquema XSD.->2025-03-06 14:08:12:
+El XML NO es válido según el esquema XSD.->2025-03-06 14:09:39:
+El XML NO es válido según el esquema XSD.->2025-03-06 14:28:56:
+El XML NO es válido según el esquema XSD.->2025-03-06 14:41:30:
+El XML NO es válido según el esquema XSD.->2025-03-06 14:43:41:
+El XML es válido según el esquema XSD.->2025-03-06 21:40:10:
+El XML NO es válido según el esquema XSD.->2025-03-06 21:41:16:
+El XML es válido según el esquema XSD.->2025-03-07 10:47:42:
+El XML es válido según el esquema XSD.->2025-03-07 11:06:29:
 El XML es válido según el esquema XSD.
